@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: OReilly Order Notifications API
+  version: 1.0.0
+  description: |
+    Workshop contract showing invoice snapshots as historical business artifacts.
+  x-owner: ordering-platform
+  x-domain: order-notifications
+  x-workshop-pattern: historical-snapshot
+  x-api-lifecycle: workshop-pilot
+servers:
+  - url: http://localhost:3002
+tags:
+  - name: invoice-notifications
+    description: Notification contracts for stock transfer order events.
+paths:
+  /stock-transfer-orders/notifications:
+    post:
+      tags:
+        - invoice-notifications
+      summary: Notify downstream consumers of a stock transfer invoice
+      operationId: notifyStockTransferOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OReillyInvoiceSnapshot'
+      responses:
+        '202':
+          description: Notification accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationReceipt'
+              examples:
+                accepted:
+                  value:
+                    status: accepted
+                    receivedAt: '2026-04-10T12:00:00.000Z'
+                    invoiceNumber: INV-1001
+                duplicate:
+                  value:
+                    status: duplicate
+                    receivedAt: '2026-04-10T12:05:00.000Z'
+                    invoiceNumber: INV-1001
+        '400':
+          $ref: '../shared-contracts/common-schemas.yaml#/components/responses/BadRequest'
+  /invoices/{invoiceNumber}:
+    get:
+      tags:
+        - invoice-notifications
+      summary: Retrieve a stored invoice snapshot
+      operationId: getInvoiceSnapshot
+      parameters:
+        - name: invoiceNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OReillyInvoiceSnapshot'
+              examples:
+                default:
+                  value:
+                    invoiceNumber: INV-1001
+                    legacyId: LEG-8821
+                    enactorId: EN-4411
+                    counterNumber: 4
+                    customerInfo:
+                      customerNumber: 90001234
+                      customerName: OReilly Test Garage
+                      customerAddress1: 123 Pilot Way
+                      customerCity: Springfield
+                      customerState: MO
+                      customerZipCode: '65807'
+                      customerPhone: 417-555-0188
+                      customerType: pro
+                    delivery: true
+                    items:
+                      - line: IGN
+                        item: PLUG-001
+                        quantity: 2
+                    invoiceTotal: 33.48
+                    createdAt: '2026-04-10T12:00:00.000Z'
+                    sourceSystem: remote-pos
+        '404':
+          $ref: '../shared-contracts/common-schemas.yaml#/components/responses/NotFound'
+components:
+  schemas:
+    InvoiceCustomerSnapshot:
+      type: object
+      additionalProperties: false
+      required:
+        - customerNumber
+        - customerName
+      properties:
+        customerNumber:
+          type: integer
+          format: int64
+        customerName:
+          type: string
+        customerAddress1:
+          type: string
+        customerCity:
+          type: string
+        customerState:
+          type: string
+        customerZipCode:
+          type: string
+        customerPhone:
+          type: string
+        customerType:
+          type: string
+    OReillyInvoiceSnapshot:
+      type: object
+      additionalProperties: false
+      required:
+        - invoiceNumber
+        - counterNumber
+        - customerInfo
+        - delivery
+        - items
+        - invoiceTotal
+        - createdAt
+        - sourceSystem
+      properties:
+        invoiceNumber:
+          type: string
+        legacyId:
+          type: string
+        enactorId:
+          type: string
+        counterNumber:
+          type: integer
+          format: int32
+        customerInfo:
+          $ref: '#/components/schemas/InvoiceCustomerSnapshot'
+        delivery:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '../shared-contracts/common-schemas.yaml#/components/schemas/LineItemQuantity'
+        invoiceTotal:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        sourceSystem:
+          type: string
+          enum:
+            - remote-pos
+            - posrest
+            - electronicordering
+    NotificationReceipt:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - receivedAt
+        - invoiceNumber
+      properties:
+        status:
+          type: string
+          enum:
+            - accepted
+            - duplicate
+        receivedAt:
+          type: string
+          format: date-time
+        invoiceNumber:
+          type: string
