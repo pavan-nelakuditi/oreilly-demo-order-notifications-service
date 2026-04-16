@@ -60,6 +60,24 @@ on:
         required: false
         default: workshop.owner@example.com
         type: string
+      repo_write_mode:
+        description: Repo mutation mode for generated Postman assets
+        required: true
+        type: choice
+        default: commit-and-push
+        options:
+          - commit-and-push
+          - commit-only
+      environments_json:
+        description: JSON array of environment slugs to create
+        required: false
+        default: '["TEST"]'
+        type: string
+      env_runtime_urls_json:
+        description: JSON map of environment slug to runtime base URL
+        required: false
+        default: '{"TEST":"http://localhost:3002"}'
+        type: string
 
 jobs:
   onboarding:
@@ -84,22 +102,19 @@ jobs:
         run: npm run validate:specs
       - name: Publish bundled spec branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+          SPECHUB_WRITE_TOKEN: ${{ secrets.SPECHUB_WRITE_TOKEN }}
           GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
-          rm -rf /tmp/bundled-spec
-          mkdir -p /tmp/bundled-spec
-          cd /tmp/bundled-spec
-          git init
+          rm -rf /tmp/spechub
+          git clone "https://x-access-token:${SPECHUB_WRITE_TOKEN}@github.com/pavan-nelakuditi/Spechub.git" /tmp/spechub
+          cd /tmp/spechub
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cp "$GITHUB_WORKSPACE/dist/openapi.bundled.yaml" ./openapi.yaml
-          git add openapi.yaml
-          git commit -m "chore: publish bundled spec"
-          git branch -M bundled-specs
-          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push --force origin bundled-specs
+          mkdir -p order-notifications
+          cp "$GITHUB_WORKSPACE/dist/openapi.bundled.yaml" ./order-notifications/openapi.yaml
+          git add order-notifications/openapi.yaml
+          git diff --cached --quiet || git commit -m "chore: publish bundled order notifications spec"
+          git push origin main
       - name: Run Postman API onboarding
         uses: postman-cs/postman-api-onboarding-action@main
         with:
@@ -116,14 +131,14 @@ jobs:
           mock-url: ${{ github.event.inputs.mock_url }}
           monitor-cron: ${{ github.event.inputs.monitor_cron }}
           spec-path: dist/openapi.bundled.yaml
-          spec-url: https://raw.githubusercontent.com/${{ github.repository }}/bundled-specs/openapi.yaml
+          spec-url: https://raw.githubusercontent.com/pavan-nelakuditi/Spechub/main/order-notifications/openapi.yaml
           generate-ci-workflow: false
-          repo-write-mode: commit-only
+          repo-write-mode: ${{ github.event.inputs.repo_write_mode }}
           domain: workshop-pilot
           domain-code: OR
           requester-email: ${{ github.event.inputs.requester_email }}
-          environments-json: '["stage"]'
-          env-runtime-urls-json: '{"stage":"https://stage.api.example.com"}'
+          environments-json: ${{ github.event.inputs.environments_json }}
+          env-runtime-urls-json: ${{ github.event.inputs.env_runtime_urls_json }}
           governance-mapping-json: '{"workshop-pilot":"Workshop Pilot"}'
           postman-api-key: ${{ secrets.POSTMAN_API_KEY }}
           postman-access-token: ${{ secrets.POSTMAN_ACCESS_TOKEN }}
