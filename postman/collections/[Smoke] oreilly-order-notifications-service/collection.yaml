@@ -1,0 +1,14 @@
+$schema: https://schema.postman.com/json/draft-2020-12/collection/v3.0.0/
+type: collection
+name: '[Smoke] oreilly-order-notifications-service'
+description: |
+  Workshop contract showing invoice snapshots as historical business artifacts.
+id: b4440884-7b26-46f4-8185-d9c769d417d0
+variables:
+  - key: baseUrl
+    value: http://localhost:3002
+    type: any
+items:
+  - ref: ./stock-transfer-orders/folder.yaml
+  - ref: ./invoices/folder.yaml
+  - ref: ./00 - Resolve Secrets.request.yaml
