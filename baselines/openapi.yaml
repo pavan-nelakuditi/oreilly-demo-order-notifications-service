@@ -102,6 +102,7 @@ components:
         customerNumber:
           type: integer
           format: int64
+          example: 90001234
         customerName:
           type: string
         customerAddress1:
