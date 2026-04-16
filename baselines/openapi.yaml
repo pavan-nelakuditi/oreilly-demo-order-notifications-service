@@ -95,7 +95,6 @@ components:
   schemas:
     InvoiceCustomerSnapshot:
       type: object
-      additionalProperties: false
       required:
         - customerNumber
         - customerName
@@ -119,7 +118,6 @@ components:
           type: string
     OReillyInvoiceSnapshot:
       type: object
-      additionalProperties: false
       required:
         - invoiceNumber
         - counterNumber
@@ -160,7 +158,6 @@ components:
             - electronicordering
     NotificationReceipt:
       type: object
-      additionalProperties: false
       required:
         - status
         - receivedAt
