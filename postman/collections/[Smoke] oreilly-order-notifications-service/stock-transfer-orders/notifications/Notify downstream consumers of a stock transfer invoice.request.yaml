@@ -12,7 +12,7 @@ body:
   content: |-
     {
       "invoiceNumber": "string",
-      "counterNumber": 634,
+      "counterNumber": 6637,
       "customerInfo": {
         "customerNumber": 90001234,
         "customerName": "string",
@@ -23,21 +23,21 @@ body:
         "customerPhone": "string",
         "customerType": "string"
       },
-      "delivery": false,
+      "delivery": true,
       "items": [
         {
           "line": "string",
           "item": "string",
-          "quantity": 6809
+          "quantity": 7498
         },
         {
           "line": "string",
           "item": "string",
-          "quantity": 1733
+          "quantity": 5825
         }
       ],
-      "invoiceTotal": 8340.750244758561,
-      "createdAt": "1958-11-05T21:10:11.983Z",
+      "invoiceTotal": 6723.216093374845,
+      "createdAt": "2025-02-06T22:29:43.109Z",
       "sourceSystem": "electronicordering",
       "legacyId": "string",
       "enactorId": "string"
