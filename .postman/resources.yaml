@@ -17,3 +17,5 @@ cloudResources:
     ../postman/collections/[Contract] oreilly-order-notifications-service: 50585768-96c0b7ac-2cdb-41b0-832a-0eaafab48766
   environments:
     ../postman/environments/TEST.postman_environment.json: 50585768-914aaa4f-efef-427b-84ee-925301bbe858
+  specs:
+    ../api/openapi.yaml: ba384d56-e56d-4edc-a97b-42f95cabd66e
