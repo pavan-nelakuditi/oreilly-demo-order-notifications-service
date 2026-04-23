@@ -1,0 +1,22 @@
+workspace:
+  id: 13e3fc33-05fc-4caa-902f-ed7c6f80bb91
+localResources:
+  collections:
+    - ../postman/collections/[Baseline] oreilly-demo-order-notifications-service
+    - ../postman/collections/[Smoke] oreilly-demo-order-notifications-service
+    - ../postman/collections/[Contract] oreilly-demo-order-notifications-service
+  environments:
+    - ../postman/environments/TEST.postman_environment.json
+  specs:
+    - ../api/openapi.bundled.yaml
+    - ../api/openapi.yaml
+    - ../baselines/openapi.yaml
+cloudResources:
+  collections:
+    ../postman/collections/[Baseline] oreilly-demo-order-notifications-service: 54270406-908dd1ac-455c-4e47-a2fc-792e2e0b6508
+    ../postman/collections/[Smoke] oreilly-demo-order-notifications-service: 54270406-cbc29379-59e3-49e0-ba5f-b9d1d3136e8a
+    ../postman/collections/[Contract] oreilly-demo-order-notifications-service: 54270406-c5dcd741-0ec0-4b12-95f7-5f8458925a27
+  environments:
+    ../postman/environments/TEST.postman_environment.json: 54270406-ac2d6838-d311-4722-9bc0-c67fbd6fab13
+  specs:
+    ../api/openapi.bundled.yaml: 5fc4c1f0-1159-4bec-97bb-6802a6a29b0d

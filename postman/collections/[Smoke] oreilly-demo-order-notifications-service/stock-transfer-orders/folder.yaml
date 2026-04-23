@@ -1,0 +1,4 @@
+type: folder
+name: stock-transfer-orders
+items:
+  - ref: ./notifications/folder.yaml

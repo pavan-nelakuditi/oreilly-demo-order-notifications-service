@@ -1,0 +1,75 @@
+type: http
+name: Notify downstream consumers of a stock transfer invoice
+url: '{{baseUrl}}/stock-transfer-orders/notifications'
+method: POST
+headers:
+  - key: Content-Type
+    value: application/json
+  - key: Accept
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "invoiceNumber": "string",
+      "counterNumber": 1116,
+      "customerInfo": {
+        "customerNumber": 90001234,
+        "customerName": "string",
+        "customerAddress1": "string",
+        "customerCity": "string",
+        "customerState": "string",
+        "customerZipCode": "string",
+        "customerPhone": "string",
+        "customerType": "string"
+      },
+      "delivery": false,
+      "items": [
+        {
+          "line": "string",
+          "item": "string",
+          "quantity": 8554
+        },
+        {
+          "line": "string",
+          "item": "string",
+          "quantity": 395
+        }
+      ],
+      "invoiceTotal": 3033.262250207125,
+      "createdAt": "2010-01-27T15:15:30.478Z",
+      "sourceSystem": "remote-pos",
+      "legacyId": "string",
+      "enactorId": "string"
+    }
+examples:
+  - response:
+      statusCode: 202
+      statusText: Accepted
+      body:
+        type: json
+        content: |-
+          {
+            "status": "accepted",
+            "receivedAt": "2026-04-10T12:00:00.000Z",
+            "invoiceNumber": "INV-1001"
+          }
+      headers:
+        - key: Content-Type
+          value: application/json
+    name: Notification accepted
+  - response:
+      statusCode: 400
+      statusText: Bad Request
+      body:
+        type: json
+        content: |-
+          {
+            "code": "string",
+            "message": "string",
+            "correlationId": "string"
+          }
+      headers:
+        - key: Content-Type
+          value: application/json
+    name: Request payload failed API boundary validation.

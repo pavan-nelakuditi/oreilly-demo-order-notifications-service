@@ -1,0 +1,4 @@
+type: folder
+name: invoices
+items:
+  - ref: ./{invoiceNumber}/folder.yaml
