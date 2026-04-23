@@ -34,21 +34,6 @@ jobs:
         run: npm test
       - name: Check breaking changes
         run: npm run check:breaking
-      - name: Publish bundled spec to Spechub
-        env:
-          SPECHUB_WRITE_TOKEN: ${{ secrets.SPECHUB_WRITE_TOKEN }}
-          GITHUB_WORKSPACE: ${{ github.workspace }}
-        run: |
-          rm -rf /tmp/spechub
-          git clone "https://x-access-token:${SPECHUB_WRITE_TOKEN}@github.com/pavan-nelakuditi/Spechub.git" /tmp/spechub
-          cd /tmp/spechub
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p order-notifications
-          cp "$GITHUB_WORKSPACE/dist/openapi.bundled.yaml" ./order-notifications/openapi.yaml
-          git add order-notifications/openapi.yaml
-          git diff --cached --quiet || git commit -m "chore: publish bundled order notifications spec"
-          git push origin main
       - name: Debug local spec context before onboarding
         run: |
           echo "pwd=$(pwd)"
@@ -178,8 +163,8 @@ jobs:
           monitor-id: ${{ steps.postman_resources.outputs.monitor_id }}
           mock-url: ${{ steps.postman_resources.outputs.mock_url }}
           monitor-cron: ''
-          spec-path: api/openapi.yaml
-          spec-url: https://raw.githubusercontent.com/pavan-nelakuditi/Spechub/main/order-notifications/openapi.yaml
+          spec-path: api/openapi.bundled.yaml
+          spec-url: https://raw.githubusercontent.com/pavan-nelakuditi/oreilly-demo-order-notifications-service/main/api/openapi.bundled.yaml
           generate-ci-workflow: false
           repo-write-mode: commit-and-push
           domain: workshop-pilot
