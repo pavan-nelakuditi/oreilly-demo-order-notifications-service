@@ -1,4 +1,0 @@
-type: folder
-name: notifications
-items:
-  - ref: ./Notify downstream consumers of a stock transfer invoice.request.yaml
