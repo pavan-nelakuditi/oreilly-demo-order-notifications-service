@@ -12,7 +12,7 @@ body:
   content: |-
     {
       "invoiceNumber": "string",
-      "counterNumber": 6568,
+      "counterNumber": 7606,
       "customerInfo": {
         "customerNumber": 90001234,
         "customerName": "string",
@@ -28,16 +28,16 @@ body:
         {
           "line": "string",
           "item": "string",
-          "quantity": 5539
+          "quantity": 9379
         },
         {
           "line": "string",
           "item": "string",
-          "quantity": 3571
+          "quantity": 1237
         }
       ],
-      "invoiceTotal": 8766.601106147747,
-      "createdAt": "1955-07-09T12:11:54.866Z",
+      "invoiceTotal": 8027.9932572088765,
+      "createdAt": "1947-11-06T15:44:27.329Z",
       "sourceSystem": "posrest",
       "legacyId": "string",
       "enactorId": "string"
