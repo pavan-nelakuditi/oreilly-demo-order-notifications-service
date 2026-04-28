@@ -1,4 +1,0 @@
-type: folder
-name: '{invoiceNumber}'
-items:
-  - ref: ./Retrieve a stored invoice snapshot.request.yaml
