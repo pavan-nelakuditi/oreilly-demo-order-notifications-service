@@ -32,11 +32,3 @@ export function createApp() {
 }
 
 export const app = createApp();
-
-if (process.argv[1]?.endsWith('app.ts')) {
-  const port = Number(process.env.PORT || 3002);
-  app.listen(port, () => {
-    console.log(`order-notifications-service listening on http://localhost:${port}`);
-  });
-}
-

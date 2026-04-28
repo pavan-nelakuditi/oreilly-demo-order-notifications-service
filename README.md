@@ -19,6 +19,8 @@ npm run validate:specs
 npm run typecheck
 npm test
 npm run check:breaking
+npm run build
+npm run start
 ```
 
 ## Required Secrets
