@@ -1,0 +1,63 @@
+type: http
+name: Retrieve a stored invoice snapshot
+url: '{{baseUrl}}/invoices/:invoiceNumber'
+method: GET
+headers:
+  - key: Accept
+    value: application/json
+pathVariables:
+  - key: invoiceNumber
+    value: string
+examples:
+  - response:
+      statusCode: 200
+      statusText: OK
+      body:
+        type: json
+        content: |-
+          {
+            "invoiceNumber": "INV-1001",
+            "legacyId": "LEG-8821",
+            "enactorId": "EN-4411",
+            "counterNumber": 4,
+            "customerInfo": {
+              "customerNumber": 90001234,
+              "customerName": "OReilly Test Garage",
+              "customerAddress1": "123 Pilot Way",
+              "customerCity": "Springfield",
+              "customerState": "MO",
+              "customerZipCode": "65807",
+              "customerPhone": "417-555-0188",
+              "customerType": "pro"
+            },
+            "delivery": true,
+            "items": [
+              {
+                "line": "IGN",
+                "item": "PLUG-001",
+                "quantity": 2
+              }
+            ],
+            "invoiceTotal": 33.48,
+            "createdAt": "2026-04-10T12:00:00.000Z",
+            "sourceSystem": "remote-pos"
+          }
+      headers:
+        - key: Content-Type
+          value: application/json
+    name: Invoice snapshot
+  - response:
+      statusCode: 404
+      statusText: Not Found
+      body:
+        type: json
+        content: |-
+          {
+            "code": "string",
+            "message": "string",
+            "correlationId": "string"
+          }
+      headers:
+        - key: Content-Type
+          value: application/json
+    name: Requested resource was not found.

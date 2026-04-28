@@ -1,0 +1,26 @@
+workspace:
+  id: f595c918-f7e2-48d2-9c73-0845b222650f
+localResources:
+  collections:
+    - ../postman/collections/[Baseline] oreilly-demo-order-notifications-service
+    - ../postman/collections/[Smoke] oreilly-demo-order-notifications-service
+    - ../postman/collections/[Contract] oreilly-demo-order-notifications-service
+  environments:
+    - ../postman/environments/TEST.postman_environment.json
+    - ../postman/environments/STAGE.postman_environment.json
+    - ../postman/environments/PROD.postman_environment.json
+  specs:
+    - ../api/openapi.bundled.yaml
+    - ../api/openapi.yaml
+    - ../baselines/openapi.yaml
+cloudResources:
+  collections:
+    ../postman/collections/[Baseline] oreilly-demo-order-notifications-service: 54270406-cade6b8a-8c19-49b9-b68a-c8e3d74632c7
+    ../postman/collections/[Smoke] oreilly-demo-order-notifications-service: 54270406-ffdfe291-023f-40ef-87f7-cef97ffcdcf8
+    ../postman/collections/[Contract] oreilly-demo-order-notifications-service: 54270406-84f0e7ba-c873-4f1b-9786-9d470b9eff4b
+  environments:
+    ../postman/environments/TEST.postman_environment.json: 54270406-f339b0fe-2a24-4e41-81e2-f9cd502b030f
+    ../postman/environments/STAGE.postman_environment.json: 54270406-77d2170d-8a8d-4f3c-99bb-94f0ade897d2
+    ../postman/environments/PROD.postman_environment.json: 54270406-c561004d-3187-4470-92bc-950f1829a097
+  specs:
+    ../api/openapi.yaml: 2a10720b-d1f6-40ff-82ed-745a6730e7c6
